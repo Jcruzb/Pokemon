@@ -1,30 +1,40 @@
-class Game{
-    constructor(ctx, canvas, width, height){
+class Game {
+    constructor(ctx, canvas, width, height) {
         this.ctx = ctx;
         this.canvas = canvas;
         this.width = width;
         this.height = height;
         this.paletBackground = new PaletBackground(this.ctx);
-        this.player = new Player(this.ctx,this, 'Ash', 'Pokemon Trainer');
+        this.player = new Player(this.ctx, this, 'Ash', 'Pokemon Trainer');
         this.counter = 0;
         this.moving = true;
 
         //grilla
         this.grill = new Grill(this.ctx);
         //Static Obstacules
-        this.staticObstacules = new StaticObstacules(this.ctx, this);
+        this.obstacles = [
+            new StaticObstacules(this.ctx, this, 0, 0, 300, this.ctx.canvas.height),
+            new StaticObstacules(this.ctx, this, 700, 0, 300, this.ctx.canvas.height),
+            new StaticObstacules(this.ctx, this, 370, 780, 90, 80),
+            new StaticObstacules(this.ctx, this, 300, 240, 40, 60),
+            new StaticObstacules(this.ctx, this, 300, 420, 180, 60),
+            new StaticObstacules(this.ctx, this, 300, 640, 180, 120),
+
+        ]
+
     }
-    start(){
+    start() {
         this.interval = setInterval(() => {
             this.clear();
-            this.movePlayer();
-            this.moveBackground();
+            this.move();
+            this.colision();
             this.draw();
             this.counter++;
-        }, 1000/60);
-      console.log(this.staticObstacules)
+        }, 1000 / 60);
+        console.log(this.obstacles)
     }
-    draw(){
+
+    draw() {
         this.paletBackground.draw();
         this.player.draw();
 
@@ -33,39 +43,37 @@ class Game{
 
         //Static Obstacules
         this.drawObstacules();
-        
+
     }
-    
-    drawObstacules(){
-        //Hay que evaluar que el obstaculo se vaya a crear en relación al tamaó de la imagen. no del canvas
-        this.staticObstacules.draw(0,0,300,this.ctx.canvas.height);
+
+    drawObstacules() {
+        this.obstacles.forEach((obs) => obs.draw());
+    }
+
+    //move
+    move() {
+        this.moveObjs();
     }
 
 
-    movePlayer(){
-        this.player.moveDown();
-        this.player.moveRight();
-        this.player.moveUp();
-        this.player.moveLeft();
+    moveObjs() {
+        this.obstacles.forEach((obs) => {
+            obs.moveDown();
+            obs.moveRight();
+            obs.moveUp();
+            obs.moveLeft();
+        })
     }
-    moveBackground(){
-        //if(this.moving){
-            this.paletBackground.moveDown();
-            this.paletBackground.moveRight();
-            this.paletBackground.moveUp();
-            this.paletBackground.moveLeft();
-        //}
-    }
-    clear(){
+
+    clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
-    coliision(){
-        const colision = this.staticObstacules.colision(this.player);
-        if(colision){
-            this.moving = false;
-            console.log('colision');
-        }
+    colision() {
+        this.obstacles.some((obs) => {
+            const checkObstacleColision = obs.colision(this.player);
+            if (checkObstacleColision) {
+                this.moving = false;
+            }
+        })
     }
-
-
 }

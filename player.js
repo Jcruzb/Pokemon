@@ -5,9 +5,9 @@ class Player {
         this.name = name;
         this.type = type;
         //Imagen
-        this.x = this.ctx.canvas.width / 2-15;
-        this.y = this.ctx.canvas.height / 2-15;
-        this.width = 70;
+        this.x = 480;
+        this.y = 900;
+        this.width = 30;
         this.img = new Image();
         this.isReady = false;
         this.img.src = './img/player/player.png'
@@ -21,7 +21,7 @@ class Player {
         this.xFrames = 4;
         this.yFrames = 4;
         //speed
-        this.speed = 5;
+        this.speed = 0;
         //movement
         this.game = game;
         this.movement = {
@@ -52,7 +52,7 @@ class Player {
         if(this.movement.up){
             this.y -= this.speed;
             this.yFrame = 3;
-            if(this.game.counter % 10 === 0){
+            if(this.game.counter % 5 === 0){
                 this.xFrame++;
                 this.movement.up=false;
                 if(this.xFrame > 3){
@@ -65,7 +65,7 @@ class Player {
         if(this.movement.down){
             this.y += this.speed;
             this.yFrame = 0;
-            if(this.game.counter % 10 === 0){
+            if(this.game.counter % 5 === 0){
                 this.xFrame++;
                 this.movement.down=false;
                 if(this.xFrame > 3){
@@ -78,7 +78,7 @@ class Player {
         if(this.movement.left){
             this.x -= this.speed;
             this.yFrame = 1;
-            if(this.game.counter % 10 === 0){
+            if(this.game.counter % 5 === 0){
                 this.xFrame++;
                 this.movement.left=false;
                 if(this.xFrame > 3){
@@ -91,7 +91,7 @@ class Player {
         if(this.movement.right){
             this.x += this.speed;
             this.yFrame = 2;
-            if(this.game.counter % 10 === 0){
+            if(this.game.counter % 5 === 0){
                 this.xFrame++;
                 this.movement.right=false;
                 if(this.xFrame > 3){
@@ -99,11 +99,5 @@ class Player {
                 }
             }
         }
-    }
-    collision(obstacule){
-        return this.x < obstacule.x + obstacule.width &&
-        this.x + this.width > obstacule.x &&
-        this.y < obstacule.y + obstacule.height &&
-        this.y + this.height > obstacule.y;
     }
 }

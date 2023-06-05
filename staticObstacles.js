@@ -1,19 +1,39 @@
 class StaticObstacules{
-    constructor(ctx, game){
+    constructor(ctx, game, x, y, width, height){
         this.ctx = ctx;
         this.game = game;
-        this.x = 0;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.speed = 5;
     }
 
-    draw(x, y, width, height){
-        this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(x, y, width, height);
+    draw(){
+        this.ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
+    
     colision(element){
-        const isColliding = this.x < element.x + element.width &&
+        return ( this.x < element.x + element.width &&
         this.x + this.width > element.x &&
         this.y < element.y + element.height &&
-        this.y + this.height > element.y;
+        this.y + this.height > element.y)
     }
-}
+    //move
+    moveUp(){
+            this.y += this.speed;
+    }
+    moveDown(){
+            this.y -= this.speed;
+    }
+    moveLeft(){
+            this.x += this.speed;
+
+    }
+    moveRight(){
+
+            this.x -= this.speed;
+
+    }
+}   
