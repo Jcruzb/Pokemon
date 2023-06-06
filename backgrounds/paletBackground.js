@@ -24,22 +24,22 @@ class PaletBackground {
 
     //move
     moveUp() {
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.y += this.speed;
         }
     }
     moveDown() {    
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.y -= this.speed;
         }
     }
     moveLeft() {    
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.x += this.speed;
         }
     }
     moveRight() {
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.x -= this.speed;
         }
     }

@@ -10,7 +10,9 @@ class StaticObstacules{
     }
 
     draw(){
-        this.ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        //this.ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        this.ctx.fillStyle = 'transparent';
+
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     
@@ -23,22 +25,22 @@ class StaticObstacules{
     }
     //move
     moveUp() {
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.y += this.speed;
         }
     }
     moveDown() {    
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.y -= this.speed;
         }
     }
     moveLeft() {    
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.x += this.speed;
         }
     }
     moveRight() {
-        if(!this.game.player.isBlocked){
+        if(this.game.isMoving){
             this.x -= this.speed;
         }
     }

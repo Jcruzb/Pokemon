@@ -12,28 +12,29 @@ class Grass {
     }
 
     draw() {
-        this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+        //this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+        this.ctx.fillStyle = 'rgba(transparent)';
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
  
     //move
     moveUp() {
-        if (!this.game.player.isBlocked) {
+        if(this.game.isMoving){
             this.y += this.speed;
         }
     }
-    moveDown() {
-        if (!this.game.player.isBlocked) {
+    moveDown() {    
+        if(this.game.isMoving){
             this.y -= this.speed;
         }
     }
-    moveLeft() {
-        if (!this.game.player.isBlocked) {
+    moveLeft() {    
+        if(this.game.isMoving){
             this.x += this.speed;
         }
     }
     moveRight() {
-        if (!this.game.player.isBlocked) {
+        if(this.game.isMoving){
             this.x -= this.speed;
         }
     }

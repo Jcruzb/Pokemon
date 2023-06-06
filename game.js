@@ -8,12 +8,15 @@ class Game {
         this.player = new Player(this.ctx, this, 'Ash', 'Pokemon Trainer');
         this.counter = 0;
 
+        //movimiento
+        this.isMoving = true;
+
         //grilla
         this.grill = new Grill(this.ctx);
         //Static Obstacules
         this.obstacles = [
-            new StaticObstacules(this.ctx, this, 0, 0, 300, this.ctx.canvas.height),
-            new StaticObstacules(this.ctx, this, 700, 0, 300, this.ctx.canvas.height),
+            new StaticObstacules(this.ctx, this, 0, 0, 300, 2000),
+            new StaticObstacules(this.ctx, this, 700, 0, 300, 2000),
             new StaticObstacules(this.ctx, this, 300, 0, 400, 40),
             new StaticObstacules(this.ctx, this, 650, 40, 50, 600),
             new StaticObstacules(this.ctx, this, 410, 60, 30, 150),
@@ -90,8 +93,8 @@ class Game {
         this.obstacles.some((obs) => {
             const checkObstacleColision = obs.colision(this.player);
             if (checkObstacleColision) {
-                this.player.isBlocked = true;
-                this.player.reset();
+                this.isMoving = false;
+
             }
         })
     }
@@ -100,7 +103,7 @@ class Game {
         this.grass.some((grass) => {
             const checkGrassColision = grass.findPokemon(this.player);
             if (checkGrassColision) {
-                this.player.isBlocked = false;
+                
             }
         })
     }
