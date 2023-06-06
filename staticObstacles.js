@@ -14,6 +14,7 @@ class StaticObstacules{
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
     
+    
     colision(element){
         return ( this.x < element.x + element.width &&
         this.x + this.width > element.x &&
@@ -21,19 +22,24 @@ class StaticObstacules{
         this.y + this.height > element.y)
     }
     //move
-    moveUp(){
+    moveUp() {
+        if(!this.game.player.isBlocked){
             this.y += this.speed;
+        }
     }
-    moveDown(){
+    moveDown() {    
+        if(!this.game.player.isBlocked){
             this.y -= this.speed;
+        }
     }
-    moveLeft(){
+    moveLeft() {    
+        if(!this.game.player.isBlocked){
             this.x += this.speed;
-
+        }
     }
-    moveRight(){
-
+    moveRight() {
+        if(!this.game.player.isBlocked){
             this.x -= this.speed;
-
+        }
     }
 }   

@@ -24,6 +24,7 @@ class Player {
         this.speed = 0;
         //movement
         this.game = game;
+        this.isBlocked = false;
         this.movement = {
             up: false,
             down: false,
@@ -48,56 +49,63 @@ class Player {
          
        }
     }
-    moveUp() {
-        if(this.movement.up){
-            this.y -= this.speed;
-            this.yFrame = 3;
-            if(this.game.counter % 5 === 0){
-                this.xFrame++;
-                this.movement.up=false;
-                if(this.xFrame > 3){
-                    this.xFrame = 0;
-                }
-            }
-        }
+    //movimiento
+    reset(){
+        this.isBlocked = false;
     }
-    moveDown() {
-        if(this.movement.down){
-            this.y += this.speed;
-            this.yFrame = 0;
-            if(this.game.counter % 5 === 0){
-                this.xFrame++;
-                this.movement.down=false;
-                if(this.xFrame > 3){
-                    this.xFrame = 0;
-                }
-            }
-        }       
-    }
-    moveLeft() {
-        if(this.movement.left){
-            this.x -= this.speed;
-            this.yFrame = 1;
-            if(this.game.counter % 5 === 0){
-                this.xFrame++;
-                this.movement.left=false;
-                if(this.xFrame > 3){
-                    this.xFrame = 0;
-                }
-            }
-        }
-    }
-    moveRight() {
-        if(this.movement.right){
-            this.x += this.speed;
-            this.yFrame = 2;
-            if(this.game.counter % 5 === 0){
-                this.xFrame++;
-                this.movement.right=false;
-                if(this.xFrame > 3){
-                    this.xFrame = 0;
-                }
-            }
-        }
-    }
+
+
+
+    // moveUp() {
+    //     if(this.movement.up){
+    //         this.y -= this.speed;
+    //         this.yFrame = 3;
+    //         if(this.game.counter % 5 === 0){
+    //             this.xFrame++;
+    //             this.movement.up=false;
+    //             if(this.xFrame > 3){
+    //                 this.xFrame = 0;
+    //             }
+    //         }
+    //     }
+    // }
+    // moveDown() {
+    //     if(this.movement.down){
+    //         this.y += this.speed;
+    //         this.yFrame = 0;
+    //         if(this.game.counter % 5 === 0){
+    //             this.xFrame++;
+    //             this.movement.down=false;
+    //             if(this.xFrame > 3){
+    //                 this.xFrame = 0;
+    //             }
+    //         }
+    //     }       
+    // }
+    // moveLeft() {
+    //     if(this.movement.left){
+    //         this.x -= this.speed;
+    //         this.yFrame = 1;
+    //         if(this.game.counter % 5 === 0){
+    //             this.xFrame++;
+    //             this.movement.left=false;
+    //             if(this.xFrame > 3){
+    //                 this.xFrame = 0;
+    //             }
+    //         }
+    //     }
+    // }
+    // moveRight() {
+    //     if(this.movement.right){
+    //         this.x += this.speed;
+    //         this.yFrame = 2;
+    //         if(this.game.counter % 5 === 0){
+    //             this.xFrame++;
+    //             this.movement.right=false;
+    //             if(this.xFrame > 3){
+    //                 this.xFrame = 0;
+    //             }
+    //         }
+    //     }
+    // }
 }

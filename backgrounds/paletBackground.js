@@ -1,5 +1,5 @@
 class PaletBackground {
-    constructor(ctx) {
+    constructor(ctx, game) {
         this.ctx = ctx;
         
         this.x = 0;
@@ -7,6 +7,8 @@ class PaletBackground {
         this.isReady = false;
         this.img = new Image();
         this.img.src = './backgrounds/fondo.jpg';
+        this.game = game;
+
         this.speed = 5;
         this.img.onload = () => {
             this.isReady = true;
@@ -22,23 +24,23 @@ class PaletBackground {
 
     //move
     moveUp() {
-    
+        if(!this.game.player.isBlocked){
             this.y += this.speed;
-
+        }
     }
     moveDown() {    
-
+        if(!this.game.player.isBlocked){
             this.y -= this.speed;
-
+        }
     }
     moveLeft() {    
-
+        if(!this.game.player.isBlocked){
             this.x += this.speed;
-
+        }
     }
     moveRight() {
-
+        if(!this.game.player.isBlocked){
             this.x -= this.speed;
-
+        }
     }
 }
