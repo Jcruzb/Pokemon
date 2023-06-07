@@ -60,7 +60,7 @@ class Player {
         if(this.movement.up){
             this.y -= this.speed;
             this.yFrame = 3;
-            if(this.game.counter % 5 === 0){
+            if(this.game.counter % 2 === 0){
                 this.xFrame++;
                 this.movement.up=false;
                 if(this.xFrame > 3){
@@ -73,7 +73,7 @@ class Player {
         if(this.movement.down){
             this.y += this.speed;
             this.yFrame = 0;
-            if(this.game.counter % 5 === 0){
+            if(this.game.counter % 2 === 0){
                 this.xFrame++;
                 this.movement.down=false;
                 if(this.xFrame > 3){
@@ -86,7 +86,7 @@ class Player {
         if(this.movement.left){
             this.x -= this.speed;
             this.yFrame = 1;
-            if(this.game.counter % 5 === 0){
+            if(this.game.counter % 2 === 0){
                 this.xFrame++;
                 this.movement.left=false;
                 if(this.xFrame > 3){
@@ -99,7 +99,7 @@ class Player {
         if(this.movement.right){
             this.x += this.speed;
             this.yFrame = 2;
-            if(this.game.counter % 5 === 0){
+            if(this.game.counter % 2 === 0){
                 this.xFrame++;
                 this.movement.right=false;
                 if(this.xFrame > 3){
@@ -108,4 +108,5 @@ class Player {
             }
         }
     }
+    
 }

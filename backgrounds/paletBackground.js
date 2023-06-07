@@ -1,7 +1,7 @@
 class PaletBackground {
     constructor(ctx, game) {
         this.ctx = ctx;
-        
+
         this.x = 0;
         this.y = 0;
         this.isReady = false;
@@ -15,6 +15,13 @@ class PaletBackground {
             this.width = this.img.width;
             this.height = this.img.height;
         }
+
+        this.movement = {
+            up: false,
+            down: false,
+            left: false,
+            right: false
+        }
     }
     draw() {
         if (this.isReady) {
@@ -23,23 +30,24 @@ class PaletBackground {
     }
 
     //move
+
     moveUp() {
-        if(this.game.isMoving){
+        if (this.movement.up) {
             this.y += this.speed;
         }
     }
-    moveDown() {    
-        if(this.game.isMoving){
+    moveDown() {
+        if (this.movement.down) {
             this.y -= this.speed;
         }
     }
-    moveLeft() {    
-        if(this.game.isMoving){
+    moveLeft() {
+        if (this.movement.left) {
             this.x += this.speed;
         }
     }
     moveRight() {
-        if(this.game.isMoving){
+        if (this.movement.right) {
             this.x -= this.speed;
         }
     }
