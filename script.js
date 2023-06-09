@@ -23,14 +23,13 @@ document.addEventListener('keydown', (e) => {
                 game.grass.forEach(grass => {
                     grass.moveUp()
                 });
+                game.obstacles.forEach(obs => {
+                    obs.movement.up = true;
+                    obs.moveUp()
+                    game.futureColision(obs);
+                }
+                );
             }
-
-            game.obstacles.forEach(obs => {
-                obs.movement.up = true;
-                obs.moveUp()
-                game.futureColision(obs);
-            }
-            );
             break;
         case 40:
             game.player.movement.down = true;

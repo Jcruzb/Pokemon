@@ -82,7 +82,8 @@ class Game {
         this.obstacles.some((obs) => {
             const checkObstacleColision = obs.colision(this.player);
             if (checkObstacleColision) {
-
+                this.paletBackground.speed = 0;
+                obs.speed = 0;
 
             }
         })
