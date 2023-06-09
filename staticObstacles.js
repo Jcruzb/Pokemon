@@ -33,18 +33,43 @@ class StaticObstacules {
             this.y + this.height > element.y)
     }
 
-    futureColision(element) {
-        const futureYTop = this.y + this.speed;
-        const futureYBottom = this.y - this.speed;
-        const futureXLeft = this.x - this.speed;
-        const futureXRight = this.x + this.speed;
+    futureColisionTop(element) {
+        const futureYTop = this.y + 1+this.speed;
         return (
-            futureXLeft < element.x + element.width &&
-            futureXRight + this.width > element.x &&
-            futureYBottom < element.y + element.height &&
+            this.x < element.x + element.width &&
+            this.x + this.width > element.x &&
+            this.y < element.y + element.height &&
             futureYTop + this.height > element.y
             )
     }
+    futureColisionBottom(element) {
+        const futureYBottom = this.y - 1-this.speed;
+        return (
+            this.x < element.x + element.width &&
+            this.x + this.width > element.x &&
+            this.y < element.y + element.height &&
+            futureYBottom + this.height > element.y
+            )
+    }
+    futureColisionLeft(element) {
+        const futureXLeft = this.x + 1+this.speed;
+        return (
+            this.x < element.x + element.width &&
+            futureXLeft + this.width > element.x &&
+            this.y < element.y + element.height &&
+            this.y + this.height > element.y
+            )
+    }
+    futureColisionRight(element) {
+        const futureXRight = this.x - 1-this.speed;
+        return (
+            futureXRight < element.x + element.width &&
+            this.x + this.width > element.x &&
+            this.y < element.y + element.height &&
+            this.y + this.height > element.y
+            )
+    }
+    
 
     //move
     moveUp() {

@@ -5,8 +5,8 @@ class Player {
         this.name = name;
         this.type = type;
         //Imagen
-        this.x = 480;
-        this.y = 900;
+        this.x = 400;
+        this.y = 980;
         this.width = 30;
         this.img = new Image();
         this.isReady = false;

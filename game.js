@@ -42,7 +42,7 @@ class Game {
     start() {
         this.interval = setInterval(() => {
             this.clear();
-            this.colision();
+            //this.colision();
             this.colisionGrass();
             this.draw();
             this.counter++;
@@ -83,31 +83,43 @@ class Game {
             const checkObstacleColision = obs.colision(this.player);
             if (checkObstacleColision) {
                 this.paletBackground.speed = 0;
-                obs.speed = 0;
+                this.obstacles.forEach((obs) => {           
+                    obs.speed = 0;
+                }
+                )
 
             }
         })
     }
     //futurecolision
-    futureColision() {
+    futureColisionTop() {
         return this.obstacles.some((obs) => {
-            const checkObstacleColision = obs.futureColision(this.player);
-            if (checkObstacleColision) {
-                this.obstacles.forEach((obs) => {
-                    console.log('will colide')
-                    return true;
-                })
-                
-            } 
+            return obs.futureColisionTop(this.player);
         })
     }
+    futureColisionBottom() {
+        return this.obstacles.some((obs) => {
+            return obs.futureColisionBottom(this.player);
+        })
+    }
+    futureColisionLeft() {
+        return this.obstacles.some((obs) => {
+            return obs.futureColisionLeft(this.player);
+        })
+    }
+    futureColisionRight() {
+        return this.obstacles.some((obs) => {
+            return obs.futureColisionRight(this.player);
+        })
+    }
+
 
     //colision with grass
     colisionGrass() {
         this.grass.some((grass) => {
             const checkGrassColision = grass.findPokemon(this.player);
             if (checkGrassColision) {
-
+                
             }
         })
     }
