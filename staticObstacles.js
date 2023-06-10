@@ -34,7 +34,7 @@ class StaticObstacules {
     }
 
     futureColisionTop(element) {
-        const futureYTop = this.y + 1+this.speed;
+        const futureYTop = this.y + 1 + this.speed;
         return (
             this.x < element.x + element.width &&
             this.x + this.width > element.x &&
@@ -43,16 +43,16 @@ class StaticObstacules {
             )
     }
     futureColisionBottom(element) {
-        const futureYBottom = this.y - 1-this.speed;
+        const futureYBottom = this.y - 1 - this.speed;
         return (
             this.x < element.x + element.width &&
             this.x + this.width > element.x &&
-            this.y < element.y + element.height &&
+            futureYBottom < element.y + element.height &&
             futureYBottom + this.height > element.y
             )
     }
     futureColisionLeft(element) {
-        const futureXLeft = this.x + 1+this.speed;
+        const futureXLeft = this.x + 1 + this.speed;
         return (
             this.x < element.x + element.width &&
             futureXLeft + this.width > element.x &&
@@ -61,7 +61,7 @@ class StaticObstacules {
             )
     }
     futureColisionRight(element) {
-        const futureXRight = this.x - 1-this.speed;
+        const futureXRight = this.x - 1 -   this.speed;
         return (
             futureXRight < element.x + element.width &&
             this.x + this.width > element.x &&

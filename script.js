@@ -42,6 +42,7 @@ document.addEventListener('keydown', (e) => {
                 game.obstacles.forEach(obs => {
                     obs.movement.down = true;
                     obs.moveDown();
+  
                     
                 })
             }
