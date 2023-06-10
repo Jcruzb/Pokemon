@@ -7,7 +7,6 @@ class Grass {
         this.width = width;
         this.height = height;
         this.isColiding = false;
-        this.evaluated = false;
         this.speed = 5;
     }
 
@@ -46,9 +45,9 @@ class Grass {
             this.y + this.height > element.y){
                 this.isColiding = true;
                 const randomPokemon = Math.floor(Math.random() * 100);
-                if(randomPokemon < 10){
-                    this.evaluated = true;
-                console.log(this.evaluated)
+                if(randomPokemon < 5){
+                    this.game.isFighting = true;
+                console.log(this.game.isFighting)
                 }
             }
         }

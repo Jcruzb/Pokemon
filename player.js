@@ -24,7 +24,6 @@ class Player {
         this.speed = 0;
         //movement
         this.game = game;
-        this.isBlocked = false;
         this.movement = {
             up: false,
             down: false,
@@ -50,12 +49,6 @@ class Player {
        }
     }
     //movimiento
-    reset(){
-        this.isBlocked = false;
-    }
-
-
-
     moveUp() {
         if(this.movement.up){
             this.y -= this.speed;

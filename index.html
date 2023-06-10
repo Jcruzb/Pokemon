@@ -5,17 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
     <title>Pokemon</title>
 </head>
-<body>
-    <!-- debbe ser de width="700" height="600 para desarrollo es width="1500" height="1500"-->
-    <canvas id="canvas" width="700" height="600"></canvas>
-    <canvas id="battle" width="700" height="600"></canvas>
+<body class="d-flex justify-content-center align-items-center flex-column">
+    <!-- debbe ser de width="700" height="600" para desarrollo es width="1500" height="1500"-->
+    <div>
+        <canvas id="canvas"  width="900" height="1500"></canvas>
+    </div>
+    <div>
+        <button id="start-button" class="btn btn-success">Start</button>
+        <button id="pause-button" class="btn btn-danger">Pausa</button>
+        <button id="continue-button" class="btn btn-primary">Continue</button>
+    </div>
+  
+   
 </body>
 <script src="FUNCTIONS.js"></script>
 <script src="./backgrounds/paletBackground.js"></script>
+<script src="./backgrounds/batlle.js"></script>
 <script src="./player.js"></script>
-<script src="./colisionPlayer.js"></script>
+<script src="./pokemon.js"></script>
+<script src="./fireball.js"></script>
 <script src="./grilla.js"></script>
 <script src="./grass.js"></script>
 <script src="./staticObstacles.js"></script>
