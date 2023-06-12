@@ -39,6 +39,11 @@ document.addEventListener('keydown', (e) => {
                 break;
             case 40:
                 game.pokemonPlayer.moveDown();
+                break;
+            //attack
+            case 32:
+                game.pokemonPlayer.addFireBall();
+                break;
         }
     }
 });
@@ -72,6 +77,16 @@ document.addEventListener('keyup', (e) => {
                 game.obstacles.forEach(obs => {
                     obs.movement.right = false;
                 });
+                break;
+        }
+    } else {
+        switch (e.keyCode) {
+            case 38:
+
+                break;
+            case 40:
+                case 32: 
+                
                 break;
         }
     }

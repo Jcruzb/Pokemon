@@ -7,7 +7,7 @@ class Game {
         this.paletBackground = new PaletBackground(this.ctx, this);
         this.battle = new Battle(this.ctx, this);
         this.player = new Player(this.ctx, this, 'Ash', 'Pokemon Trainer');
-        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 350,'./img/Pokemon/Charmander.png', 100, 20);
+        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 350, './img/Pokemon/Charmander.png', 100, 20);
         this.counter = 0;
 
         //movimiento
@@ -55,19 +55,20 @@ class Game {
             new Grass(this.ctx, this, 340, 560, 120, 40),
             new Grass(this.ctx, this, 570, 560, 90, 40),
         ]
-        
+
     }
 
     start() {
-        if (!this.isPaused) {
-            if (!this.isFighting) {
-                this.interval = setInterval(() => {
-                    this.clear();
-                    this.draw();
-                    this.counter++;
-                }, 1000 / 60);
-            }
-        }
+        //if (!this.isPaused) {
+        //if (!this.isFighting) {
+        this.interval = setInterval(() => {
+            this.clear();
+            this.draw();
+            this.moveAttacks();
+            this.counter++;
+        }, 1000 / 60);
+        //}
+        //}
     }
 
     pause() {
@@ -75,7 +76,7 @@ class Game {
         clearInterval(this.interval);
 
     }
-    
+
     continue() {
         this.isPaused = false;
         this.start();
@@ -87,7 +88,7 @@ class Game {
         const scale = 1.5
         this.ctx.scale(scale, scale);
     }
-    fightMap(){
+    fightMap() {
         this.ctx.canvas.width = this.battle.width;
         this.ctx.canvas.height = this.battle.height;
         this.ctx.translate(0, 0);
@@ -113,6 +114,7 @@ class Game {
         else {
             this.fightMap();
             this.pokemonPlayer.draw();
+            this.pokemonPlayer.drawAttack();
         }
 
     }
@@ -129,6 +131,7 @@ class Game {
     //clear
     clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
+        this.pokemonPlayer.clearFireBalls();
     }
 
     //movimiento
@@ -184,8 +187,8 @@ class Game {
             });
             //Encuentra pokemon
             this.colisionGrass();
-        }
-    }
+        };
+    };
     moveRight() {
         //Movimiento del jugador
         this.player.movement.right = true;
@@ -200,17 +203,22 @@ class Game {
                 obs.moveRight();
 
             });
-        }
+        };
         //Encuentra pokemon
         this.colisionGrass();
-    }
+    };
+
+    //Movimiento de Ataques
+    moveAttacks() {
+        this.pokemonPlayer.moveAttack();
+    };
 
     //futurecolision
     futureColisionTop() {
         return this.obstacles.some((obs) => {
             return obs.futureColisionTop(this.player);
-        })
-    }
+        });
+    };
     futureColisionBottom() {
         return this.obstacles.some((obs) => {
             return obs.futureColisionBottom(this.player);
@@ -233,8 +241,6 @@ class Game {
         })
     }
 
-    setCombat() {
 
-    }
 
 }
