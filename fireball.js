@@ -1,5 +1,5 @@
 class FireBall {
-    constructor(ctx, game, x, y) {
+    constructor(ctx, game, x, y, img) {
         this.ctx = ctx;
         this.game = game;
         this.x = x;
@@ -7,7 +7,7 @@ class FireBall {
         this.height = 50;
 
         this.image = new Image();
-        this.image.src = "./img/Pokemon/fireball.png";
+        this.image.src = img;
         this.isReady = false;
         this.image.onload = () => {
             this.isReady = true;
@@ -15,9 +15,7 @@ class FireBall {
         }
         this.speed = 10;
 
-        this.movement = {
-            right: true,
-        }
+
 
         //frames
         this.xFrame = 0;
@@ -40,7 +38,7 @@ class FireBall {
         }
     }
     move() {
-        this.x += this.speed;
+        this.x = this.x + this.speed;
         this.yFrame = 0;
         if (this.game.counter % 2 === 0) {
             this.xFrame++;

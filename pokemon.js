@@ -1,5 +1,5 @@
 class Pokemon {
-    constructor(ctx, game, x, y, img, lifePoints, attackPoints) {
+    constructor(ctx, game, x, y, img, lifePoints, attackPoints, atkImg) {
         // para el Draw
         this.ctx = ctx;
         this.game = game;
@@ -23,9 +23,12 @@ class Pokemon {
         this.yFrames = 4;
         //movement
         this.speed = 3;
+        this.minLimit = 20;
+        this.maxLimit = 330;
         //atack
         this.fireBalls = [];
         this.isAtacking = false;
+        this.atkImg = atkImg
     }
     draw() {
         if (this.img.isReady) {
@@ -40,6 +43,7 @@ class Pokemon {
                 this.width,
                 this.height
             );
+            this.moveRandom();
         }
     }
     addFireBall() {
@@ -47,7 +51,8 @@ class Pokemon {
             this.ctx,
             this.game,
             this.x + this.width,
-            this.y + this.height / 2
+            this.y + this.height / 2,
+            this.atkImg
         );
         this.fireBalls.push(fireBall);
     }
@@ -55,10 +60,6 @@ class Pokemon {
             this.fireBalls.forEach(fireBall => {
                 fireBall.draw();
             });
-
-
-        console.log(this.fireBalls.length);
-        console.log(this.isAtacking);
 
     }
     moveUp() {
@@ -83,6 +84,21 @@ class Pokemon {
             }
         }
     }
+    moveRandom() {
+        const randomMove = Math.floor(Math.random() * 100);
+        if (this.game.counter % 50  === 0) {
+            if (this.y < 1.5 * this.minLimit) {
+                this.moveDown();
+                this.moveDown();
+                this.moveDown();
+            } else if (this.y + this.width > this.maxLimit) {
+                this.moveUp();
+                this.moveUp();
+                this.moveUp();
+            } 
+        }
+    }
+
     moveAttack() {
         this.fireBalls.forEach(fireBall => fireBall.move());
     }

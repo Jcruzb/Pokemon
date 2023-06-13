@@ -43,6 +43,7 @@ document.addEventListener('keydown', (e) => {
             //attack
             case 32:
                 game.pokemonPlayer.addFireBall();
+
                 break;
         }
     }

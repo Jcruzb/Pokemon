@@ -5,9 +5,18 @@ class Game {
         this.width = width;
         this.height = height;
         this.paletBackground = new PaletBackground(this.ctx, this);
+
+
+ //POKEMONES       
         this.battle = new Battle(this.ctx, this);
         this.player = new Player(this.ctx, this, 'Ash', 'Pokemon Trainer');
-        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 350, './img/Pokemon/Charmander.png', 100, 20);
+
+
+        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 100, 20, './img/Pokemon/fireBall.png');
+
+        this.EnemyCharmander = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 100, 20, './img/Pokemon/hojasNavaja.png');
+
+
         this.counter = 0;
 
         //movimiento
@@ -65,6 +74,8 @@ class Game {
             this.clear();
             this.draw();
             this.moveAttacks();
+            this.moveEnemys();
+            this.randomAttack();
             this.counter++;
         }, 1000 / 60);
         //}
@@ -113,8 +124,13 @@ class Game {
         }
         else {
             this.fightMap();
+
             this.pokemonPlayer.draw();
             this.pokemonPlayer.drawAttack();
+
+            this.EnemyCharmander.draw();
+            this.EnemyCharmander.drawAttack();
+
         }
 
     }
@@ -211,7 +227,17 @@ class Game {
     //Movimiento de Ataques
     moveAttacks() {
         this.pokemonPlayer.moveAttack();
+        this.EnemyCharmander.moveAttack();
+
     };
+    //Movimiento de pokemones Enemigos
+    moveEnemys() {
+        this.EnemyCharmander.moveRandom()
+    }
+    //Ataques Random
+    randomAttack() {
+        this.EnemyCharmander.attackRandom();
+    }
 
     //futurecolision
     futureColisionTop() {
