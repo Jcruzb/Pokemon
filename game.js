@@ -14,7 +14,9 @@ class Game {
 
         this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 100, 20, './img/Pokemon/fireBall.png');
 
-        this.EnemyCharmander = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 100, 20, './img/Pokemon/hojasNavaja.png');
+        this.EnemyBulbasaur = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 100, 20, './img/Pokemon/hojasNavaja.png');
+
+        this.EnemyMewtwo = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 100, 20, './img/Pokemon/psiquico.png');
 
 
         this.counter = 0;
@@ -28,6 +30,7 @@ class Game {
 
         //Iniciar combate
         this.isFighting = false;
+        this.selectEnemy = false;
 
         //grilla
         this.grill = new Grill(this.ctx);
@@ -128,12 +131,30 @@ class Game {
             this.pokemonPlayer.draw();
             this.pokemonPlayer.drawAttack();
 
-            this.EnemyCharmander.draw();
-            this.EnemyCharmander.drawAttack();
-
+            this.randomPokemon();
         }
 
     }
+
+    //DrawRandom
+    randomPokemon() {
+        if(!this.selectEnemy){
+            const random = Math.floor(Math.random() * 2);
+        switch (random) {
+            case 0:
+                this.EnemyBulbasaur.draw();
+                this.EnemyBulbasaur.drawAttack();
+                this.selectEnemy = true;
+                break;
+            case 1:
+                this.EnemyMewtwo.draw();
+                this.EnemyMewtwo.drawAttack();
+                this.selectEnemy = true;
+                break;
+        }
+        }
+    }
+    
     //Static Obstacules
     drawObstacules() {
         this.obstacles.forEach((obs) => obs.draw());
@@ -227,16 +248,16 @@ class Game {
     //Movimiento de Ataques
     moveAttacks() {
         this.pokemonPlayer.moveAttack();
-        this.EnemyCharmander.moveAttack();
+        this.EnemyBulbasaur.moveAttack();
 
     };
     //Movimiento de pokemones Enemigos
     moveEnemys() {
-        this.EnemyCharmander.moveRandom()
+        this.EnemyBulbasaur.moveRandom()
     }
     //Ataques Random
     randomAttack() {
-        this.EnemyCharmander.attackRandom();
+        this.EnemyBulbasaur.attackRandom();
     }
 
     //futurecolision

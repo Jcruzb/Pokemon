@@ -24,31 +24,44 @@ class EnemyPokemon extends Pokemon {
         });
     }
     moveRandom() {
-        const maxLimit = 330;
-        const minLimit = 20;
+        const maxLimit = 500;
+        const minLimit = 40;
         const random = Math.floor(Math.random() * 100);
-        if(this.y < minLimit) {
-            this.moveDown();
-            this.moveDown();
-            this.moveDown();
-            this.moveDown();
-            this.moveDown();
-        }else if (this.y + this.height > maxLimit) {
-            this.moveUp();
-            this.moveUp();
-            this.moveUp();
-            this.moveUp();
-            this.moveUp();
-        } else if (random < 50) {
-            this.moveUp();
+        if (this.game.counter % 50 === 0) {
+            if(this.y < minLimit) {
+                this.moveDown();
+                this.moveDown();
+                this.moveDown();
+                this.moveDown();
+                this.moveDown();
+            }else if (this.y + this.height > maxLimit) {
+                this.moveUp();
+                this.moveUp();
+                this.moveUp();
+                this.moveUp();
+                this.moveUp();
+            } else if (random < 50) {
+                this.moveUp();
+            }
+            else {
+                this.moveDown();
+            }
         }
-        else {
-            this.moveDown();
-        }
+   
+    }
+    addFireBall() {
+        const fireBall = new FireBall(
+            this.ctx,
+            this.game,
+            this.x -100,
+            this.y + this.height / 2,
+            this.atkImg
+        );
+        this.fireBalls.push(fireBall);
     }
     attackRandom() {
         const random = Math.floor(Math.random() * 100);
-        if (random < 1) {
+        if (random < 0.03) {
             this.addFireBall();
         }
     }
