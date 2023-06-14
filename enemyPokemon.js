@@ -1,33 +1,31 @@
 class EnemyPokemon extends Pokemon {
-    super(ctx, game, x, y, img, lifePoints, attackPoints,) {
-        this.ctx = ctx;
-        this.game = game;
-        this.x = x;
-        this.y = y;
-        this.img = img;
-        this.lifePoints = lifePoints;
-        this.attackPoints = attackPoints;
-        this.width = 50;
+    constructor(ctx, game, x, y, img, lifePoints, attackPoints, atkImg) {
+
+        super(ctx, game, x, y, img, lifePoints, attackPoints, atkImg)
+        // this.ctx = ctx;
+        // this.game = game;
+        // this.x = x;
+        // this.y = y;
+        // this.img = img;
+        // this.lifePoints = lifePoints;
+        // this.attackPoints = attackPoints;
+        this.width = 70;
         this.height = 50;
-        this.isReady = false;
-        this.image.onload = () => {
-            this.isReady = true;
-            this.width = this.height * this.image.width / this.image.height;
-        }
+        // this.isReady = false;
+        // this.image.onload = () => {
+        //     this.isReady = true;
+        //     this.width = this.height * this.image.width / this.image.height;
+        // }
         this.xFrame = 0;
         this.frames = 3;
+        this.fireballSpeed = -10;
     }
-    moveAttack() {
-        this.fireBalls.forEach(fireBall => {
-            fireBall.speed = fireBall.speed * -1.05;
-            fireBall.move()
-        });
-    }
+
     moveRandom() {
-        const maxLimit = 500;
-        const minLimit = 40;
+        const maxLimit = 700;
+        const minLimit = 10;
         const random = Math.floor(Math.random() * 100);
-        if (this.game.counter % 50 === 0) {
+        if (this.game.counter % 20 === 0) {
             if(this.y < minLimit) {
                 this.moveDown();
                 this.moveDown();
@@ -49,19 +47,26 @@ class EnemyPokemon extends Pokemon {
         }
    
     }
+    clearFireBalls() {
+        this.fireBalls = this.fireBalls.filter(fireBall => {
+            return fireBall.x > 0;
+        });
+    }
+
     addFireBall() {
         const fireBall = new FireBall(
             this.ctx,
             this.game,
             this.x -100,
             this.y + this.height / 2,
-            this.atkImg
+            this.atkImg,
+            this.fireballSpeed,
         );
         this.fireBalls.push(fireBall);
     }
     attackRandom() {
         const random = Math.floor(Math.random() * 100);
-        if (random < 0.03) {
+        if (random < 0.3) {
             this.addFireBall();
         }
     }

@@ -6,17 +6,42 @@ class Game {
         this.height = height;
         this.paletBackground = new PaletBackground(this.ctx, this);
 
+        //Musica
+        this.gameMusic = new Audio();
+        this.gameMusic.src = "sounds/03 Title Screen.mp3";
+        this.gameMusic.loop = true;
+        this.gameMusic.volume = 0.2;
 
- //POKEMONES       
+        this.BattleMusic = new Audio();
+        this.BattleMusic.src = "11 Battle! (Trainer Battle).mp3";
+        this.BattleMusic.loop = true;
+        this.BattleMusic.volume = 0.2;
+
+        this.AshBattleMusic = new Audio();
+        this.AshBattleMusic.src = "68 Battle! (Mewtwo).mp3";
+        this.AshBattleMusic.loop = true;
+        this.AshBattleMusic.volume = 0.2;
+
+
+
+
+        //POKEMONES       
         this.battle = new Battle(this.ctx, this);
         this.player = new Player(this.ctx, this, 'Ash', 'Pokemon Trainer');
 
 
-        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 100, 20, './img/Pokemon/fireBall.png');
+        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 1000, 5, './img/Pokemon/fireBall.png');
 
-        this.EnemyBulbasaur = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 100, 20, './img/Pokemon/hojasNavaja.png');
+        // this.enemyPokemon = [
+        //     this.EnemyBulbasaur = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 100, 20, './img/Pokemon/hojasNavaja.png'),
 
-        this.EnemyMewtwo = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 100, 20, './img/Pokemon/psiquico.png');
+        //     this.EnemyMewtwo = new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 100, 20, './img/Pokemon/psiquico.png')
+        // ]
+
+        this.enemyPokemon = [
+            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 1000, 5, './img/Pokemon/hojasNavaja.png'),
+            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 1000, 5, './img/Pokemon/psiquico.png')
+        ]
 
 
         this.counter = 0;
@@ -30,7 +55,7 @@ class Game {
 
         //Iniciar combate
         this.isFighting = false;
-        this.selectEnemy = false;
+        this.selectedEnemy = false;
 
         //grilla
         this.grill = new Grill(this.ctx);
@@ -74,11 +99,13 @@ class Game {
         //if (!this.isPaused) {
         //if (!this.isFighting) {
         this.interval = setInterval(() => {
+            this.gameMusic.play();
             this.clear();
             this.draw();
             this.moveAttacks();
             this.moveEnemys();
             this.randomAttack();
+            this.startBattle();
             this.counter++;
         }, 1000 / 60);
         //}
@@ -126,35 +153,27 @@ class Game {
             this.drawGrass();
         }
         else {
-            this.fightMap();
+            setTimeout(() => {
+                this.fightMap();
 
             this.pokemonPlayer.draw();
             this.pokemonPlayer.drawAttack();
 
-            this.randomPokemon();
-        }
 
+            this.enemyPokemon[this.selectedEnemy].draw();
+            this.enemyPokemon[this.selectedEnemy].drawAttack();
+            }, 1000);
+        }
     }
 
     //DrawRandom
     randomPokemon() {
-        if(!this.selectEnemy){
-            const random = Math.floor(Math.random() * 2);
-        switch (random) {
-            case 0:
-                this.EnemyBulbasaur.draw();
-                this.EnemyBulbasaur.drawAttack();
-                this.selectEnemy = true;
-                break;
-            case 1:
-                this.EnemyMewtwo.draw();
-                this.EnemyMewtwo.drawAttack();
-                this.selectEnemy = true;
-                break;
-        }
-        }
+
+        this.selectedEnemy = Math.floor(Math.random() * 2);
+
+
     }
-    
+
     //Static Obstacules
     drawObstacules() {
         this.obstacles.forEach((obs) => obs.draw());
@@ -169,6 +188,7 @@ class Game {
     clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.pokemonPlayer.clearFireBalls();
+        this.enemyPokemon[this.selectedEnemy] && this.enemyPokemon[this.selectedEnemy].clearFireBalls();
     }
 
     //movimiento
@@ -248,16 +268,20 @@ class Game {
     //Movimiento de Ataques
     moveAttacks() {
         this.pokemonPlayer.moveAttack();
-        this.EnemyBulbasaur.moveAttack();
+        this.enemyPokemon.forEach(pokemon => pokemon.moveAttack());
 
     };
     //Movimiento de pokemones Enemigos
     moveEnemys() {
-        this.EnemyBulbasaur.moveRandom()
+        this.enemyPokemon.forEach(pokemon => pokemon.moveRandom());
     }
     //Ataques Random
     randomAttack() {
-        this.EnemyBulbasaur.attackRandom();
+        if (this.isFighting) {
+            this.enemyPokemon.forEach(pokemon => pokemon.attackRandom());
+        }
+
+
     }
 
     //futurecolision
@@ -288,6 +312,44 @@ class Game {
         })
     }
 
+    //daños
+    reciveDamage() {
+            const enemyAttack = this.enemyPokemon[this.selectedEnemy].attackPoints;
+            const enemyColision = this.enemyPokemon[this.selectedEnemy].fireBalls.some((fireball)=> fireball.colision(this.pokemonPlayer));
+            if (enemyColision) {
+                this.pokemonPlayer.reciveDamage(enemyAttack);
+            }
 
+    }
+    makeDamage() {
+            const playerAttack = this.pokemonPlayer.attackPoints;
+            const playerColision = this.pokemonPlayer.fireBalls.some((fireball)=> fireball.colision(this.enemyPokemon[this.selectedEnemy]));
+            if (playerColision) {
+                this.enemyPokemon[this.selectedEnemy].reciveDamage(playerAttack);
+            }
+    }
+    // Battle
+    startBattle() {
+        if(this.isFighting){
+            this.reciveDamage();
+            this.makeDamage();
+            if (this.pokemonPlayer.lifePoints <= 0) {
+                this.isFighting = false;
+                this.pokemonPlayer.lifePoints = 1000;
+                this.pokemonPlayer.x = 100;
+                this.pokemonPlayer.y = 200;
+                this.enemyPokemon[this.selectedEnemy].lifePoints = 1000;
+                console.log("Has perdido");
+            }
+            if (this.enemyPokemon[this.selectedEnemy].lifePoints <= 0) {
+                this.isFighting = false;
+                this.pokemonPlayer.lifePoints = 1000;
+                this.pokemonPlayer.x = 100;
+                this.pokemonPlayer.y = 200;
+                this.enemyPokemon[this.selectedEnemy].lifePoints = 1000;
+                console.log("Has ganado");
+            }
+        }
+        }
 
 }

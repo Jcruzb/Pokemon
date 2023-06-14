@@ -29,6 +29,9 @@ class Pokemon {
         this.fireBalls = [];
         this.isAtacking = false;
         this.atkImg = atkImg
+        this.fireballSpeed = 10;
+
+
     }
     draw() {
         if (this.img.isReady) {
@@ -44,6 +47,7 @@ class Pokemon {
                 this.height
             );
             this.moveRandom();
+            this, this.liveBar();
         }
     }
     addFireBall() {
@@ -52,14 +56,16 @@ class Pokemon {
             this.game,
             this.x + this.width,
             this.y + this.height / 2,
-            this.atkImg
+            this.atkImg,
+            this.fireballSpeed
+
         );
         this.fireBalls.push(fireBall);
     }
     drawAttack() {
-            this.fireBalls.forEach(fireBall => {
-                fireBall.draw();
-            });
+        this.fireBalls.forEach(fireBall => {
+            fireBall.draw();
+        });
 
     }
     moveUp() {
@@ -86,7 +92,7 @@ class Pokemon {
     }
     moveRandom() {
         const randomMove = Math.floor(Math.random() * 100);
-        if (this.game.counter % 50  === 0) {
+        if (this.game.counter % 50 === 0) {
             if (this.y < 1.5 * this.minLimit) {
                 this.moveDown();
                 this.moveDown();
@@ -95,7 +101,7 @@ class Pokemon {
                 this.moveUp();
                 this.moveUp();
                 this.moveUp();
-            } 
+            }
         }
     }
 
@@ -103,11 +109,31 @@ class Pokemon {
         this.fireBalls.forEach(fireBall => fireBall.move());
     }
     clearFireBalls() {
-        this.fireBalls = this.fireBalls.filter(fireBall => fireBall.x < this.game.canvas.width);
+        this.fireBalls = this.fireBalls.filter(fireBall => {
+            return fireBall.x < this.game.canvas.width
+        });
+    }
+    colision(enemy) {
+        enemy.fireBalls.forEach(fireBall => {
+            return fireBall.colision(this);
+        });
     }
 
+    reciveDamage(damage) {
+        this.lifePoints -= damage;
 
-
-
-
+    }
+    liveBar() {
+        const totalLife = this.width;
+        const actualLife = this.lifePoints;
+        const lifeBar = (totalLife / 10) * actualLife / 100;
+        if (actualLife > this.lifePoints / 2) {
+            this.ctx.fillStyle = 'green';
+        } else if (actualLife > this.lifePoints / 4) {
+            this.ctx.fillStyle = 'yellow';
+        } else {
+            this.ctx.fillStyle = 'red';
+        }
+        this.ctx.fillRect(this.x, this.y - 10, lifeBar, 5);
+    }
 }

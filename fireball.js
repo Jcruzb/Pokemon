@@ -1,5 +1,5 @@
 class FireBall {
-    constructor(ctx, game, x, y, img) {
+    constructor(ctx, game, x, y, img, speed) {
         this.ctx = ctx;
         this.game = game;
         this.x = x;
@@ -13,7 +13,8 @@ class FireBall {
             this.isReady = true;
             this.width = this.height * this.image.width / this.image.height;
         }
-        this.speed = 10;
+
+        this.speed = speed;
 
 
 
@@ -49,7 +50,8 @@ class FireBall {
     }
 
 
-    collidesWith(pokemon) {
+
+    colision(pokemon) {
         return pokemon.x + pokemon.width >= this.x &&
             pokemon.x <= this.x + this.width &&
             pokemon.y + pokemon.height >= this.y &&

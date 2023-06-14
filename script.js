@@ -2,17 +2,22 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 
+
 //botones
 const startButton = document.getElementById('start-button');
 const pauseButton = document.getElementById('pause-button');
 const continueButton = document.getElementById('continue-button');
+const video = document.getElementById('myVideo');
+const playButton = document.getElementById('playButton');
+
+
 
 //Scale
 
 
 const game = new Game(ctx, canvas, canvas.width, canvas.height);
 
-game.start();
+//game.start();
 
 //movimiento
 
@@ -42,7 +47,10 @@ document.addEventListener('keydown', (e) => {
                 break;
             //attack
             case 32:
-                game.pokemonPlayer.addFireBall();
+                setTimeout(() => {
+                    game.pokemonPlayer.addFireBall();
+                },  1000);
+
 
                 break;
         }
@@ -94,9 +102,17 @@ document.addEventListener('keyup', (e) => {
 }
 );
 
-
+playButton.addEventListener('click', () => {
+    video.play();
+    startButton.style.display = 'block';
+    playButton.style.display = 'none';
+  });
 //Accion de Botones
 startButton.addEventListener('click', () => {
+    video.style.display = 'none';
+    video.pause();
+    playButton.style.display = 'none';
+    ctx.canvas.style.display = 'block';
     game.start();
     startButton.style.display = 'none';
     pauseButton.style.display = 'block';

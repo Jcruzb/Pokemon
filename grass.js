@@ -11,8 +11,8 @@ class Grass {
     }
 
     draw() {
-        this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
-        //this.ctx.fillStyle = 'rgba(transparent)';
+        //this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+        this.ctx.fillStyle = 'transparent';
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
  
@@ -44,10 +44,12 @@ class Grass {
             this.y < element.y + element.height &&
             this.y + this.height > element.y){
                 this.isColiding = true;
+                this.game.gameMusic.pause();
+                this.game.BattleMusic.play();
                 const randomPokemon = Math.floor(Math.random() * 100);
                 if(randomPokemon < 5){
                     this.game.isFighting = true;
-                console.log(this.game.isFighting)
+                    this.game.randomPokemon();
                 }
             }
         }
