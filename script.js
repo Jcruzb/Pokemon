@@ -22,7 +22,7 @@ const game = new Game(ctx, canvas, canvas.width, canvas.height);
 //movimiento
 
 document.addEventListener('keydown', (e) => {
-    if (!game.isFighting) {
+    if (!game.isFighting && !game.ashBattle) {
         switch (e.keyCode) {
             case 38:
                 game.moveUp();
@@ -37,7 +37,7 @@ document.addEventListener('keydown', (e) => {
                 game.moveRight();
                 break;
         }
-    } else {
+    } else if (game.isFighting && !game.ashBattle){
         switch (e.keyCode) {
             case 38:
                 game.pokemonPlayer.moveUp();
@@ -54,7 +54,24 @@ document.addEventListener('keydown', (e) => {
 
                 break;
         }
-    }
+    } else if (game.ashBattle){
+        switch (e.keyCode) {
+            case 38:
+                game.pokemonPlayer.moveUp();
+                break;
+            case 40:
+                game.pokemonPlayer.moveDown();
+                break;
+            //attack
+            case 32:
+                setTimeout(() => {
+                    game.pokemonPlayer.addFireBall();
+                },  1000);
+
+
+                break;
+        }
+    } 
 });
 
 
@@ -104,7 +121,9 @@ document.addEventListener('keyup', (e) => {
 
 playButton.addEventListener('click', () => {
     video.play();
-    startButton.style.display = 'block';
+    //setTimeout(() => {
+    startButton.style.display = 'block'
+    //}, 25000);
     playButton.style.display = 'none';
   });
 //Accion de Botones
