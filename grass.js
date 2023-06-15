@@ -11,8 +11,8 @@ class Grass {
     }
 
     draw() {
-        this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
-        //this.ctx.fillStyle = 'transparent';
+        //this.ctx.fillStyle = 'rgba(0,255,0,0.5)';
+        this.ctx.fillStyle = 'transparent';
         this.ctx.fillRect(this.x, this.y, this.width, this.height);
     }
  

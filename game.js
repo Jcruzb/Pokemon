@@ -169,7 +169,7 @@ class Game {
         if (!this.isFighting && !this.ashBattle) {
             this.BattleMusic.pause();
             this.BattleMusic.currentTime = 0;
-            //this.gameMusic.play();
+            this.gameMusic.play();
             this.worldMap();
             this.paletBackground.draw();
             this.player.draw();
@@ -189,7 +189,7 @@ class Game {
             //setTimeout(() => {
             this.gameMusic.pause();
             this.gameMusic.currentTime = 0;
-            //this.BattleMusic.play();
+            this.BattleMusic.play();
             this.fightMap();
 
             this.pokemonPlayer.draw();
@@ -202,6 +202,9 @@ class Game {
         }
         if (this.ashBattle && !this.isFighting) {
             this.fightMap();
+            this.gameMusic.pause();
+            this.gameMusic.currentTime = 0;
+            this.AshBattleMusic.play();
             this.ashBattleMap.draw();
 
             this.pokemonPlayer.draw();

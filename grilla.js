@@ -9,12 +9,12 @@ class Grill{
         
     }
     draw(){
-        this.ctx.fillStyle = 'red';
+        this.ctx.fillStyle = 'transparent';
         for(let i = 0; i < this.ctx.canvas.width; i+=20){
             this.ctx.fillRect(i, 0, 1, this.ctx.canvas.height);
             this.ctx.fillText(i, i-50, this.y+i);
         }
-        this.ctx.fillStyle = 'green';
+        this.ctx.fillStyle = 'transparent';
         for(let i = 0; i < this.ctx.canvas.height; i+= 20){
             this.ctx.fillRect(0, i, this.ctx.canvas.width, 1);
             this.ctx.fillText(i, i, this.ctx.canvas.height+i);

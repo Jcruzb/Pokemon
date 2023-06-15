@@ -1,9 +1,13 @@
-#canva{
-    background-color: red;
+#canva {
+  background-color: red;
 }
 
-video{
-    width: 700px;
-    height: 500px;
-
+video {
+  width: 700px;
+  height: 500px;
+}
+body {
+  background-image: url("./backgrounds/pokeballs.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
