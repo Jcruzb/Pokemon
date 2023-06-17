@@ -30,7 +30,7 @@ class Pokemon {
         this.isAtacking = false;
         this.atkImg = atkImg
         this.fireballSpeed = 10;
-
+        this.canFire = true;
 
     }
     draw() {
@@ -125,8 +125,8 @@ class Pokemon {
     }
     liveBar() {
         const totalLife = this.width;
-        const actualLife = this.lifePoints;
-        const lifeBar = (totalLife / 10) * actualLife / 100;
+        const actualLife = 100;
+        const lifeBar = (totalLife) * actualLife / 100;
         if (actualLife > this.lifePoints / 2) {
             this.ctx.fillStyle = 'green';
         } else if (actualLife > this.lifePoints / 4) {

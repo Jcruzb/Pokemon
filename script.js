@@ -47,11 +47,13 @@ document.addEventListener('keydown', (e) => {
                 break;
             //attack
             case 32:
-                setTimeout(() => {
+                if (game.pokemonPlayer.canFire) {
                     game.pokemonPlayer.addFireBall();
-                },  1000);
-
-
+                    game.pokemonPlayer.canFire = false;
+                    setTimeout(() => {
+                        game.pokemonPlayer.canFire = true;
+                    },  300);
+                }
                 break;
         }
     } else if (game.ashBattle){
@@ -64,11 +66,13 @@ document.addEventListener('keydown', (e) => {
                 break;
             //attack
             case 32:
-                setTimeout(() => {
+                if (game.pokemonPlayer.canFire) {
                     game.pokemonPlayer.addFireBall();
-                },  1000);
-
-
+                    game.pokemonPlayer.canFire = false;
+                    setTimeout(() => {
+                        game.pokemonPlayer.canFire = true;
+                    },  300);
+                }
                 break;
         }
     } 

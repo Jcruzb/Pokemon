@@ -51,4 +51,8 @@ class PaletBackground {
             this.x -= this.speed;
         }
     }
+    reset() {
+        this.x = 0;
+        this.y = 0;
+    }
 }
