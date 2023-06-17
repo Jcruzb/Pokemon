@@ -23,8 +23,9 @@ class Game {
         this.AshBattleMusic.loop = true;
         this.AshBattleMusic.volume = 0.2;
 
-
-
+        this.finalMusic = new Audio();
+        this.finalMusic.src = "./sounds/OpeningPokemon.mp3";
+        this.finalMusic.volume = 0.2;
 
         this.battle = new Battle(this.ctx, this);
         this.ashBattleMap = new Battle(this.ctx, this);
@@ -33,7 +34,7 @@ class Game {
         this.ash = new Ash(this.ctx, this);
 
         //POKEMONES   
-        
+
         this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 1000, 5, './img/Pokemon/fireBall.png');
         this.pokemonStatus = new PokemonStatus(this.ctx, this);
         this.enemyPokemon = [
@@ -41,9 +42,9 @@ class Game {
             new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 1000, 5, './img/Pokemon/psiquico.png')
         ]
         this.ashPokemons = [
-            new EnemyPokemon(this.ctx, this, 1250, 50, './img/Pokemon/Charmander.png', 5000, 50, './img/Pokemon/fireBall.png'),
-            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 5000, 50, './img/Pokemon/hojasNavaja.png'),
-            new EnemyPokemon(this.ctx, this, 1250, 400, './img/Pokemon/Mewtwo.png', 5000, 50, './img/Pokemon/psiquico.png')
+            new EnemyPokemon(this.ctx, this, 1250, 50, './img/Pokemon/Charmander.png', 50, 5, './img/Pokemon/fireBall.png'),
+            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 50, 5, './img/Pokemon/hojasNavaja.png'),
+            new EnemyPokemon(this.ctx, this, 1250, 400, './img/Pokemon/Mewtwo.png', 50, 5, './img/Pokemon/psiquico.png')
         ]
 
 
@@ -168,6 +169,9 @@ class Game {
             new Grass(this.ctx, this, 440, 100, 210, 95),
         ]
 
+        this.finalMap = new FinishGame(this.ctx, this)
+        this.final = false;
+
     }
 
     start() {
@@ -220,63 +224,79 @@ class Game {
         this.ctx.scale(scale, scale);
         this.battle.draw();
     }
+    finalMapCanvas() {
+        this.ctx.canvas.width = 700;
+        this.ctx.canvas.height = 500;
+        this.ctx.translate(-350, -1100);
+        const scale = 1.5
+        this.ctx.scale(scale, scale);
+    }
 
     draw() {
-        //console.log ({ isFighting: this.isFighting, ashBattle: this.ashBattle })
-        if (!this.isFighting && !this.ashBattle) {
-            if (this.pokemonStatus.imgElem.src !== img1) {
-                this.pokemonStatus.imgElem.src = img1;
+            if (!this.isFighting && !this.ashBattle) {
+                if (this.pokemonStatus.imgElem.src !== img1) {
+                    this.pokemonStatus.imgElem.src = img1;
+                }
+                this.BattleMusic.pause();
+                this.BattleMusic.currentTime = 0;
+                this.AshBattleMusic.pause();
+                this.AshBattleMusic.currentTime = 0;
+                this.gameMusic.play();
+                this.worldMap();
+                this.paletBackground.draw();
+                this.player.draw();
+                this.ash.draw();
+
+                //grilla
+                this.grill.draw();
+
+                //Static Obstacules
+                this.drawObstacules();
+                //grass
+                this.drawGrass();
+                //check Ash colision
+
             }
-            this.BattleMusic.pause();
-            this.BattleMusic.currentTime = 0;
-            this.gameMusic.play();
-            this.worldMap();
-            this.paletBackground.draw();
-            this.player.draw();
-            this.ash.draw();
+            else if (this.isFighting && !this.ashBattle) {
+                //setTimeout(() => {
+                this.gameMusic.pause();
+                this.gameMusic.currentTime = 0;
+                this.BattleMusic.play();
+                this.fightMap();
 
-            //grilla
-            this.grill.draw();
-
-            //Static Obstacules
-            this.drawObstacules();
-            //grass
-            this.drawGrass();
-            //check Ash colision
-
-        }
-        else if (this.isFighting && !this.ashBattle) {
-            //setTimeout(() => {
-            this.gameMusic.pause();
-            this.gameMusic.currentTime = 0;
-            this.BattleMusic.play();
-            this.fightMap();
-
-            this.pokemonPlayer.draw();
-            this.pokemonPlayer.drawAttack();
+                this.pokemonPlayer.draw();
+                this.pokemonPlayer.drawAttack();
 
 
-            this.enemyPokemon[this.selectedEnemy].draw();
-            this.enemyPokemon[this.selectedEnemy].drawAttack();
-            // }, 1000);
-        }
-        if (this.ashBattle && !this.isFighting) {
-            this.fightMap();
-            this.gameMusic.pause();
-            this.gameMusic.currentTime = 0;
-            this.AshBattleMusic.play();
-            this.ashBattleMap.draw();
+                this.enemyPokemon[this.selectedEnemy].draw();
+                this.enemyPokemon[this.selectedEnemy].drawAttack();
+                // }, 1000);
+            }
+            if (this.ashBattle && !this.isFighting) {
+                this.fightMap();
+                this.gameMusic.pause();
+                this.gameMusic.currentTime = 0;
+                this.AshBattleMusic.play();
 
-            this.pokemonPlayer.draw();
-            this.pokemonPlayer.drawAttack();
+                this.ashBattleMap.draw();
+
+                this.pokemonPlayer.draw();
+                this.pokemonPlayer.drawAttack();
 
 
-            this.ashPokemons.forEach((ashPokemon) => {
-                ashPokemon.draw()
-                ashPokemon.drawAttack();
-                ashPokemon.moveAttack();
-            });
-        }
+                this.ashPokemons.forEach((ashPokemon) => {
+                    ashPokemon.draw()
+                    ashPokemon.drawAttack();
+                    ashPokemon.moveAttack();
+                });
+            }
+            if (this.final){
+
+                //this.worldMap();
+                this.finalMap.draw();
+                this.AshBattleMusic.pause();
+                //this.finalMusic.play();
+            }
     }
 
     //DrawRandom
@@ -498,12 +518,18 @@ class Game {
             this.reciveDamage(this.enemyPokemon[this.selectedEnemy], this.pokemonPlayer);
             this.makeDamage(this.enemyPokemon[this.selectedEnemy]);
             if (this.pokemonPlayer.lifePoints <= 0) {
-                this.isFighting = false;
+                swal("¡Perdiste!", "Sigue entrenado!!");
+                this.pause();
+                setTimeout(() => {
+                    this.isFighting = false;
+                    this.continue();
+                }, 1200);
+                ;
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
                     Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
                 }
-                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);	
+                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);
                 this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
 
                 this.pokemonPlayer.x = 100;
@@ -512,21 +538,22 @@ class Game {
                 console.log("Has perdido");
             }
             if (this.enemyPokemon[this.selectedEnemy].lifePoints <= 0) {
-                swal("¡Tu Charmander se hizo mas fuerte!");
+                swal("¡Ganaste!", "tu charmander se hizo más fuerte!!");
                 this.pause();
                 setTimeout(() => {
+                    this.isFighting = false;
                     this.continue();
-                }, 2000);
+                }, 1200);
                 this.victorys++
-                this.isFighting = false;
+
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
                     this.pokemonPlayer.lifePoints *= 1.05;
                 }
-                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);	
+                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);
                 this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
 
-                
+
                 this.pokemonPlayer.attackPoints *= 1.05
                 this.pokemonPlayer.attackPoints = this.pokemonPlayer.attackPoints.toFixed(2);
                 this.pokemonPlayer.attackPoints = Number(this.pokemonPlayer.attackPoints);
@@ -536,14 +563,12 @@ class Game {
                 this.pokemonPlayer.x = 100;
                 this.pokemonPlayer.y = 200;
                 this.enemyPokemon[this.selectedEnemy].lifePoints = 1000;
-                console.log("Has ganado");
-                console.log(this.pokemonPlayer.lifePoints);
-                console.log(this.pokemonPlayer.attackPoints);
+
             }
         }
         this.pokemonStatus.changeLivePoints();
         this.pokemonStatus.chageAttackPoints();
-        
+
     }
 
     //Ash Battle
@@ -558,30 +583,32 @@ class Game {
                     this.ashPokemons.splice(this.ashPokemons.indexOf(pokemon), 1);
                 }
                 if (this.ashPokemons.length <= 0) {
-                    this.ashBattle = false;
                     this.isFighting = false;
-                    this.victorys++;
-                    for (let i = 0; i < this.victorys; i++) {
-                        Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
-                    };
-                    this.pokemonPlayer.x = 100;
-                    this.pokemonPlayer.y = 200;
+                    this.ashBattle = false;
                     console.log("Has ganado");
+                    this.final = true
                 }
             });
 
             if (this.pokemonPlayer.lifePoints <= 0) {
+                swal("¡Perdiste!", "Sigue entrenado!!");
+                this.pause();
+                setTimeout(() => {
+                    this.ashBattle = false;
+                    this.isFighting = false;
+                    this.continue();
+                }, 2200);
 
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
                     Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
                 }
-                
+
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
                     Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
                 }
-                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);	
+                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);
                 this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
                 console.log("Has perdido");
                 this.ashBattle = false;
@@ -595,6 +622,6 @@ class Game {
         this.pokemonStatus.changeLivePoints();
         this.pokemonStatus.chageAttackPoints();
     }
-    
+
 
 }
