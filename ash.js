@@ -2,10 +2,10 @@ class Ash{
     constructor(ctx, game,) {
         this.ctx = ctx;
         this.game = game;
-        //this.x = 580;
-        //this.y = 60;
-        this.x = 500;
-        this.y = 1000;
+        this.x = 580;
+        this.y = 60;
+        //this.x = 500;
+        //this.y = 1000;
         this.width = 30;
         this.isReady = false;
         this.img = new Image();
@@ -73,8 +73,7 @@ class Ash{
             this.y + this.height > element.y)
     }
     reset() {
-        this.x = 500;
-        this.y = 1000;
-        this.draw();
+        this.x = 580;
+        this.y = 60;
     }
 }

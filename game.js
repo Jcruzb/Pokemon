@@ -33,7 +33,9 @@ class Game {
         this.ash = new Ash(this.ctx, this);
 
         //POKEMONES   
+        
         this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 1000, 5, './img/Pokemon/fireBall.png');
+        this.pokemonStatus = new PokemonStatus(this.ctx, this);
         this.enemyPokemon = [
             new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 1000, 5, './img/Pokemon/hojasNavaja.png'),
             new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 1000, 5, './img/Pokemon/psiquico.png')
@@ -96,11 +98,59 @@ class Game {
             new StaticObstacules(this.ctx, this, 585, 465, 190, 10),
             new StaticObstacules(this.ctx, this, 300, 550, 70, 10),
             new StaticObstacules(this.ctx, this, 440, 550, 210, 10),
+        ]
+        this.obstaclesInitial = [
+            new StaticObstacules(this.ctx, this, 0, 0, 300, 2000),
+            new StaticObstacules(this.ctx, this, 700, 0, 300, 2000),
+            new StaticObstacules(this.ctx, this, 300, 0, 400, 40),
+            new StaticObstacules(this.ctx, this, 650, 40, 50, 600),
+            new StaticObstacules(this.ctx, this, 410, 60, 30, 150),
+            new StaticObstacules(this.ctx, this, 425, 542, 20, 18),
+            new StaticObstacules(this.ctx, this, 370, 780, 90, 80),
+            new StaticObstacules(this.ctx, this, 550, 800, 90, 80),
+            new StaticObstacules(this.ctx, this, 300, 250, 38, 45),
+            new StaticObstacules(this.ctx, this, 443, 250, 105, 45),
+            new StaticObstacules(this.ctx, this, 520, 900, 110, 80),
+            new StaticObstacules(this.ctx, this, 340, 920, 140, 20),
+            new StaticObstacules(this.ctx, this, 520, 1030, 130, 20),
+            new StaticObstacules(this.ctx, this, 300, 420, 180, 60),
+            new StaticObstacules(this.ctx, this, 300, 640, 180, 120),
+            new StaticObstacules(this.ctx, this, 520, 640, 180, 120),
+            new StaticObstacules(this.ctx, this, 300, 1100, 500, 60),
+            new StaticObstacules(this.ctx, this, 380, 1040, 95, 60),
 
-
+            //Otros static obstacules
+            new StaticObstacules(this.ctx, this, 300, 95, 110, 10),
+            new StaticObstacules(this.ctx, this, 440, 95, 110, 10),
+            new StaticObstacules(this.ctx, this, 300, 185, 110, 10),
+            new StaticObstacules(this.ctx, this, 338, 270, 105, 10),
+            new StaticObstacules(this.ctx, this, 300, 360, 30, 10),
+            new StaticObstacules(this.ctx, this, 360, 360, 60, 10),
+            new StaticObstacules(this.ctx, this, 460, 360, 190, 10),
+            new StaticObstacules(this.ctx, this, 585, 465, 190, 10),
+            new StaticObstacules(this.ctx, this, 300, 550, 70, 10),
+            new StaticObstacules(this.ctx, this, 440, 550, 210, 10),
         ]
         //gras
         this.grass = [
+            //gras de salida de pueblo paleta
+            new Grass(this.ctx, this, 480, 610, 40, 120),
+            // gras izquierda
+            new Grass(this.ctx, this, 300, 600, 120, 40),
+            new Grass(this.ctx, this, 340, 560, 120, 40),
+            //gras derecha
+            new Grass(this.ctx, this, 530, 600, 90, 40),
+            new Grass(this.ctx, this, 340, 560, 120, 40),
+            new Grass(this.ctx, this, 570, 560, 90, 40),
+            //grass medio
+            new Grass(this.ctx, this, 480, 420, 100, 90),
+            //gras tres cuartos
+            new Grass(this.ctx, this, 550, 230, 100, 85),
+            //grass arriva
+            new Grass(this.ctx, this, 440, 100, 210, 95),
+        ]
+
+        this.grassInitial = [
             //gras de salida de pueblo paleta
             new Grass(this.ctx, this, 480, 610, 40, 120),
             // gras izquierda
@@ -152,12 +202,12 @@ class Game {
     resetMap() {
         this.paletBackground.reset();
         this.ash.reset();
-        this.obstacles.forEach(obstacle => obstacle.reset());
-        this.grass.forEach(grass => grass.reset());
+        this.obstacles.forEach((obstacle, i) => obstacle.reset(this.obstaclesInitial[i]));
+        this.grass.forEach((grass, i) => grass.reset(this.grassInitial[i]));
     }
     worldMap() {
         this.ctx.canvas.width = 700;
-        this.ctx.canvas.height = 700;
+        this.ctx.canvas.height = 500;
         this.ctx.translate(-350, -1100);
         const scale = 1.5
         this.ctx.scale(scale, scale);
@@ -174,6 +224,9 @@ class Game {
     draw() {
         //console.log ({ isFighting: this.isFighting, ashBattle: this.ashBattle })
         if (!this.isFighting && !this.ashBattle) {
+            if (this.pokemonStatus.imgElem.src !== img1) {
+                this.pokemonStatus.imgElem.src = img1;
+            }
             this.BattleMusic.pause();
             this.BattleMusic.currentTime = 0;
             this.gameMusic.play();
@@ -404,7 +457,10 @@ class Game {
     //colision with grass
     colisionGrass() {
         this.grass.some((grass) => {
-            return grass.findPokemon(this.player);
+            grass.findPokemon(this.player);
+            if (this.isFighting) {
+                this.pokemonStatus.changeImg(img2)
+            }
         })
     }
     //Ash Colision
@@ -412,8 +468,7 @@ class Game {
         if (this.ash.colision(this.player)) {
             this.isFighting = false;
             this.ashBattle = true;
-
-            console.log("ash colision");
+            this.pokemonStatus.changeImg(img2)
 
         }
     }
@@ -424,6 +479,7 @@ class Game {
         const enemyColision = enemy.fireBalls.some((fireball) => fireball.colision(this.pokemonPlayer));
         if (enemyColision) {
             this.pokemonPlayer.reciveDamage(enemyAttack);
+            this.pokemonStatus.changeLivePoints();
         }
 
     }
@@ -444,20 +500,39 @@ class Game {
             if (this.pokemonPlayer.lifePoints <= 0) {
                 this.isFighting = false;
                 this.pokemonPlayer.lifePoints = 1000;
+                for (let i = 0; i < this.victorys; i++) {
+                    Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
+                }
+                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);	
+                this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
+
                 this.pokemonPlayer.x = 100;
                 this.pokemonPlayer.y = 200;
                 this.enemyPokemon[this.selectedEnemy].lifePoints = 1000;
                 console.log("Has perdido");
             }
             if (this.enemyPokemon[this.selectedEnemy].lifePoints <= 0) {
+                swal("¡Tu Charmander se hizo mas fuerte!");
+                this.pause();
+                setTimeout(() => {
+                    this.continue();
+                }, 2000);
                 this.victorys++
                 this.isFighting = false;
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
                     this.pokemonPlayer.lifePoints *= 1.05;
                 }
+                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);	
+                this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
 
-                this.pokemonPlayer.attackPoints *= 1.05;
+                
+                this.pokemonPlayer.attackPoints *= 1.05
+                this.pokemonPlayer.attackPoints = this.pokemonPlayer.attackPoints.toFixed(2);
+                this.pokemonPlayer.attackPoints = Number(this.pokemonPlayer.attackPoints);
+
+
+
                 this.pokemonPlayer.x = 100;
                 this.pokemonPlayer.y = 200;
                 this.enemyPokemon[this.selectedEnemy].lifePoints = 1000;
@@ -466,6 +541,9 @@ class Game {
                 console.log(this.pokemonPlayer.attackPoints);
             }
         }
+        this.pokemonStatus.changeLivePoints();
+        this.pokemonStatus.chageAttackPoints();
+        
     }
 
     //Ash Battle
@@ -484,7 +562,7 @@ class Game {
                     this.isFighting = false;
                     this.victorys++;
                     for (let i = 0; i < this.victorys; i++) {
-                        this.pokemonPlayer.lifePoints *= 1.05;
+                        Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
                     };
                     this.pokemonPlayer.x = 100;
                     this.pokemonPlayer.y = 200;
@@ -496,15 +574,16 @@ class Game {
 
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
-                    this.pokemonPlayer.lifePoints *= 1.05;
+                    Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
                 }
                 
-                this.pokemonPlayer.x = 100;
-                this.pokemonPlayer.y = 200;
-                this.ashPokemons.lifePoints = 1000;
+                this.pokemonPlayer.lifePoints = 1000;
+                for (let i = 0; i < this.victorys; i++) {
+                    Math.floor(this.pokemonPlayer.lifePoints *= 1.05);
+                }
+                this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);	
+                this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
                 console.log("Has perdido");
-                console.log(this.pokemonPlayer.lifePoints);
-                console.log(this.pokemonPlayer)
                 this.ashBattle = false;
                 this.isFighting = false;
                 this.resetMap();
@@ -513,6 +592,9 @@ class Game {
 
 
         }
+        this.pokemonStatus.changeLivePoints();
+        this.pokemonStatus.chageAttackPoints();
     }
+    
 
 }

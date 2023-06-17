@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
 
     <title>Pokemon</title>
 </head>
+
 <body class="d-flex justify-content-center align-items-center flex-column">
     <!-- debbe ser de width="700" height="600" para desarrollo es width="1500" height="1500"-->
     <div>
         <video id="myVideo" src="./video/Pokemon Fire Red Version Intro.mp4"></video>
-        <canvas id="canvas"  width="900" height="1500" style="display: none;"></canvas>
+        <canvas id="canvas" width="900" height="1500" class="mt-5" style="display: none;"></canvas>
     </div>
-    <div class="grid">
-        <div>
-            <button id="playButton" class="btn btn-light">Comenzar</button>
-            <button id="start-button" class="btn btn-success" style="display: none;">Start</button>
-            <button id="pause-button" class="btn btn-danger" style="display: none;">Pausa</button>
-            <button id="continue-button" class="btn btn-primary" style="display: none;">Continue</button>
+    <div id="card-box" style="display: none;">
+        <div class=" status-box d-flex justify-content-start mt-3" >
+            <div class="card flex-row justify-content-start" style="width: 18rem;">
+                <img id="pokemon-status" src="./img/Pokemon/charmanderAlegre.jpeg" class="card-img-top p-2" alt="pokemon">
+                <div class="text d-flex justify-content-around align-items-center p-3 flex-column">
+                    <p>vida : <span id="live-points"></span></p>
+                    <p>fuerza: <span id="attack-points"></span></p>
+                </div>
+    
+            </div>
         </div>
     </div>
-  
-   
+    <div class="buttons d-flex justify-content-center align-items-center">
+        <button id="playButton" class="btn btn-light">Comenzar</button>
+        <button id="start-button" class="btn btn-success" style="display: none;">Start</button>
+        <button id="pause-button" class="btn btn-danger" style="display: none;">Pausa</button>
+        <button id="continue-button" class="btn btn-primary" style="display: none;">Continue</button>
+    </div>
+
+
 </body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="FUNCTIONS.js"></script>
 <script src="./backgrounds/paletBackground.js"></script>
 <script src="./backgrounds/batlle.js"></script>
@@ -34,6 +51,8 @@
 <script src="./pokemon.js"></script>
 <script src="./fireball.js"></script>
 <script src="./enemyPokemon.js"></script>
+
+<script src="./pokemonStatus.js"></script>
 <script src="./grilla.js"></script>
 <script src="./grass.js"></script>
 <script src="./staticObstacles.js"></script>
@@ -41,4 +60,6 @@
 <script src="./battleTransition.js"></script>
 <script src="./game.js"></script>
 <script src="./script.js"></script>
+
+
 </html>

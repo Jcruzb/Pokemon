@@ -9,6 +9,8 @@ const pauseButton = document.getElementById('pause-button');
 const continueButton = document.getElementById('continue-button');
 const video = document.getElementById('myVideo');
 const playButton = document.getElementById('playButton');
+const cardBox = document.getElementById('card-box');
+
 
 
 
@@ -138,8 +140,10 @@ startButton.addEventListener('click', () => {
     ctx.canvas.style.display = 'block';
     game.start();
     startButton.style.display = 'none';
-    pauseButton.style.display = 'block';
+    //pauseButton.style.display = 'block';
     continueButton.style.display = 'none';
+    //cardBox
+    cardBox.style.display = 'block';
 }
 );
 pauseButton.addEventListener('click', () => {
@@ -156,3 +160,7 @@ continueButton.addEventListener('click', () => {
     continueButton.style.display = 'none';
 }
 );
+
+//Manipulación del DOM
+
+

@@ -52,9 +52,10 @@ class Grass {
                 }
             }
         }
-        reset() {
-            this.x = 0;
-            this.y = 0;
+        reset(obj) {
+            this.x = obj.x;
+            this.y = obj.y;
+            this.draw();
         }
 
 }
