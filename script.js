@@ -7,7 +7,7 @@ const pauseButton = document.getElementById('pause-button');
 const continueButton = document.getElementById('continue-button');
 const video = document.getElementById('myVideo');
 const playButton = document.getElementById('playButton');
-const cardBox = document.getElementById('card-box');
+const cardBox = document.getElementById('caja');
 
 const game = new Game(ctx, canvas, canvas.width, canvas.height);
 
