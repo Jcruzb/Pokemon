@@ -538,12 +538,12 @@ class Game {
 
                 this.pokemonPlayer.lifePoints = 1000;
                 for (let i = 0; i < this.victorys; i++) {
-                    this.pokemonPlayer.lifePoints *= 1.05;
+                    this.pokemonPlayer.lifePoints *= 1.10;
                 }
                 this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);
                 this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
 
-                this.pokemonPlayer.attackPoints *= 1.05
+                this.pokemonPlayer.attackPoints *= 1.10
                 this.pokemonPlayer.attackPoints = this.pokemonPlayer.attackPoints.toFixed(2);
                 this.pokemonPlayer.attackPoints = Number(this.pokemonPlayer.attackPoints);
 
