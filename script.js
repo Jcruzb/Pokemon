@@ -1,8 +1,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-
-
 //botones
 const startButton = document.getElementById('start-button');
 const pauseButton = document.getElementById('pause-button');
@@ -11,15 +9,7 @@ const video = document.getElementById('myVideo');
 const playButton = document.getElementById('playButton');
 const cardBox = document.getElementById('card-box');
 
-
-
-
-//Scale
-
-
 const game = new Game(ctx, canvas, canvas.width, canvas.height);
-
-//game.start();
 
 //movimiento
 
@@ -81,8 +71,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-
-
 document.addEventListener('keyup', (e) => {
     if (!game.isFighting) {
         switch (e.keyCode) {
@@ -111,17 +99,7 @@ document.addEventListener('keyup', (e) => {
                 });
                 break;
         }
-    } else {
-        switch (e.keyCode) {
-            case 38:
-
-                break;
-            case 40:
-                case 32: 
-                
-                break;
-        }
-    }
+    } 
 }
 );
 
@@ -129,7 +107,7 @@ playButton.addEventListener('click', () => {
     video.play();
     //setTimeout(() => {
     startButton.style.display = 'block'
-    //}, 25000);
+    //}, 10000);
     playButton.style.display = 'none';
   });
 //Accion de Botones
@@ -161,6 +139,6 @@ continueButton.addEventListener('click', () => {
 }
 );
 
-//Manipulación del DOM
+
 
 

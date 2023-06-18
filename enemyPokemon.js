@@ -2,22 +2,11 @@ class EnemyPokemon extends Pokemon {
     constructor(ctx, game, x, y, img, lifePoints, attackPoints, atkImg) {
 
         super(ctx, game, x, y, img, lifePoints, attackPoints, atkImg)
-        // this.ctx = ctx;
-        // this.game = game;
-        // this.x = x;
-        // this.y = y;
-        // this.img = img;
-        // this.lifePoints = lifePoints;
-        // this.attackPoints = attackPoints;
         this.width = 70;
         this.height = 50;
-        // this.isReady = false;
-        // this.image.onload = () => {
-        //     this.isReady = true;
-        //     this.width = this.height * this.image.width / this.image.height;
-        // }
         this.xFrame = 0;
         this.frames = 3;
+        this.speed = 5;
         this.fireballSpeed = -10;
     }
 
@@ -25,7 +14,7 @@ class EnemyPokemon extends Pokemon {
         const maxLimit = 700;
         const minLimit = 10;
         const random = Math.floor(Math.random() * 100);
-        if (this.game.counter % 20 === 0) {
+        if (this.game.counter % 10 === 0) {
             if(this.y < minLimit) {
                 this.moveDown();
                 this.moveDown();

@@ -70,7 +70,6 @@ class StaticObstacules {
             )
     }
     
-
     //move
     moveUp() {
         if (this.movement.up) {

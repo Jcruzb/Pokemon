@@ -46,7 +46,7 @@ class Grass {
                 this.isColiding = true;
 
                 const randomPokemon = Math.floor(Math.random() * 100);
-                if(randomPokemon < 0.5){
+                if(randomPokemon < 1){
                     this.game.isFighting = true;
                     this.game.randomPokemon();
                 }

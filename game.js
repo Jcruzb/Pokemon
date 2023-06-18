@@ -35,20 +35,17 @@ class Game {
 
         //POKEMONES   
 
-        this.pokemonPlayer = new Pokemon(this.ctx, this, 100, 200, './img/Pokemon/Charmander.png', 1000, 5, './img/Pokemon/fireBall.png');
+        this.pokemonPlayer = new Pokemon(this.ctx, this, 300, 200, './img/Pokemon/Charmander.png', 1000, 5, './img/Pokemon/fireBall.png');
         this.pokemonStatus = new PokemonStatus(this.ctx, this);
         this.enemyPokemon = [
-            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 1000, 5, './img/Pokemon/hojasNavaja.png'),
-            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Mewtwo.png', 1000, 5, './img/Pokemon/psiquico.png')
+            new EnemyPokemon(this.ctx, this, 1200, 200, './img/Pokemon/Bulbasaur.png', 1000, 10, './img/Pokemon/hojasNavaja.png'),
+            new EnemyPokemon(this.ctx, this, 1200, 200, './img/Pokemon/Mewtwo.png', 1000, 40, './img/Pokemon/psiquico.png')
         ]
         this.ashPokemons = [
-            new EnemyPokemon(this.ctx, this, 1250, 50, './img/Pokemon/Charmander.png', 50, 5, './img/Pokemon/fireBall.png'),
-            new EnemyPokemon(this.ctx, this, 1250, 200, './img/Pokemon/Bulbasaur.png', 50, 5, './img/Pokemon/hojasNavaja.png'),
-            new EnemyPokemon(this.ctx, this, 1250, 400, './img/Pokemon/Mewtwo.png', 50, 5, './img/Pokemon/psiquico.png')
+            new EnemyPokemon(this.ctx, this, 1150, 100, './img/Pokemon/Charmander.png', 3500, 30, './img/Pokemon/fireBall.png'),
+            new EnemyPokemon(this.ctx, this, 1150, 300, './img/Pokemon/Bulbasaur.png', 3500, 30, './img/Pokemon/hojasNavaja.png'),
+            new EnemyPokemon(this.ctx, this, 1150, 450, './img/Pokemon/Mewtwo.png', 3500, 30, './img/Pokemon/psiquico.png')
         ]
-
-
-
 
         this.counter = 0;
 
@@ -225,86 +222,80 @@ class Game {
         this.battle.draw();
     }
     finalMapCanvas() {
-        this.ctx.canvas.width = 700;
-        this.ctx.canvas.height = 500;
-        this.ctx.translate(-350, -1100);
-        const scale = 1.5
-        this.ctx.scale(scale, scale);
+        this.ctx.canvas.width = this.finalMap.width;
+        this.ctx.canvas.height = this.finalMap.height;
     }
 
     draw() {
-            if (!this.isFighting && !this.ashBattle) {
-                if (this.pokemonStatus.imgElem.src !== img1) {
-                    this.pokemonStatus.imgElem.src = img1;
-                }
-                this.BattleMusic.pause();
-                this.BattleMusic.currentTime = 0;
-                this.AshBattleMusic.pause();
-                this.AshBattleMusic.currentTime = 0;
-                this.gameMusic.play();
-                this.worldMap();
-                this.paletBackground.draw();
-                this.player.draw();
-                this.ash.draw();
-
-                //grilla
-                this.grill.draw();
-
-                //Static Obstacules
-                this.drawObstacules();
-                //grass
-                this.drawGrass();
-                //check Ash colision
-
+        if (!this.isFighting && !this.ashBattle) {
+            if (this.pokemonStatus.imgElem.src !== img1) {
+                this.pokemonStatus.imgElem.src = img1;
             }
-            else if (this.isFighting && !this.ashBattle) {
-                //setTimeout(() => {
-                this.gameMusic.pause();
-                this.gameMusic.currentTime = 0;
-                this.BattleMusic.play();
-                this.fightMap();
+            this.BattleMusic.pause();
+            this.BattleMusic.currentTime = 0;
+            this.AshBattleMusic.pause();
+            this.AshBattleMusic.currentTime = 0;
+            this.gameMusic.play();
+            this.worldMap();
+            this.paletBackground.draw();
+            this.player.draw();
+            this.ash.draw();
 
-                this.pokemonPlayer.draw();
-                this.pokemonPlayer.drawAttack();
+            //grilla para ubicar las estructuras
+            this.grill.draw();
 
+            //Static Obstacules
+            this.drawObstacules();
+            //grass
+            this.drawGrass();
+            //check Ash colision
 
-                this.enemyPokemon[this.selectedEnemy].draw();
-                this.enemyPokemon[this.selectedEnemy].drawAttack();
-                // }, 1000);
-            }
-            if (this.ashBattle && !this.isFighting) {
-                this.fightMap();
-                this.gameMusic.pause();
-                this.gameMusic.currentTime = 0;
-                this.AshBattleMusic.play();
+        }
+        else if (this.isFighting && !this.ashBattle) {
 
-                this.ashBattleMap.draw();
+            this.gameMusic.pause();
+            this.gameMusic.currentTime = 0;
+            this.BattleMusic.play();
+            this.fightMap();
 
-                this.pokemonPlayer.draw();
-                this.pokemonPlayer.drawAttack();
+            this.pokemonPlayer.x = 300;
+            this.pokemonPlayer.draw();
+            this.pokemonPlayer.drawAttack();
 
+            this.enemyPokemon[this.selectedEnemy].draw();
+            this.enemyPokemon[this.selectedEnemy].drawAttack();
 
-                this.ashPokemons.forEach((ashPokemon) => {
-                    ashPokemon.draw()
-                    ashPokemon.drawAttack();
-                    ashPokemon.moveAttack();
-                });
-            }
-            if (this.final){
+        }
+        if (this.ashBattle && !this.isFighting) {
+            this.fightMap();
+            this.gameMusic.pause();
+            this.gameMusic.currentTime = 0;
+            this.AshBattleMusic.play();
 
-                //this.worldMap();
-                this.finalMap.draw();
-                this.AshBattleMusic.pause();
-                //this.finalMusic.play();
-            }
+            this.ashBattleMap.draw();
+
+            this.pokemonPlayer.x = 300;
+            this.pokemonPlayer.draw();
+            this.pokemonPlayer.drawAttack();
+
+            this.ashPokemons.forEach((ashPokemon) => {
+                ashPokemon.draw()
+                ashPokemon.drawAttack();
+                ashPokemon.moveAttack();
+            });
+        }
+        if (this.final) {
+
+            this.finalMapCanvas();
+            this.finalMap.draw();
+            this.AshBattleMusic.pause();
+            this.finalMusic.play();
+        }
     }
 
     //DrawRandom
     randomPokemon() {
-
         this.selectedEnemy = Math.floor(Math.random() * 2);
-
-
     }
 
     //Static Obstacules
@@ -322,6 +313,7 @@ class Game {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.pokemonPlayer.clearFireBalls();
         this.enemyPokemon[this.selectedEnemy] && this.enemyPokemon[this.selectedEnemy].clearFireBalls();
+        this.ashPokemons.forEach((ashPokemon) => ashPokemon.clearFireBalls());
     }
 
     //movimiento
@@ -440,6 +432,7 @@ class Game {
     //Movimiento de pokemones Enemigos
     moveEnemys() {
         this.enemyPokemon.forEach(pokemon => pokemon.moveRandom());
+        this.ashPokemons.forEach(pokemon => pokemon.moveRandom());
     }
     //Ataques Random
     randomAttack() {
@@ -449,8 +442,6 @@ class Game {
         if (this.ashBattle) {
             this.ashPokemons.forEach(pokemon => pokemon.attackRandom());
         }
-
-
     }
 
     //futurecolision
@@ -501,9 +492,7 @@ class Game {
             this.pokemonPlayer.reciveDamage(enemyAttack);
             this.pokemonStatus.changeLivePoints();
         }
-
     }
-
 
     makeDamage(enemy) {
         const playerAttack = this.pokemonPlayer.attackPoints;
@@ -512,6 +501,7 @@ class Game {
             enemy.reciveDamage(playerAttack);
         }
     }
+
     // Battle
     startBattle() {
         if (this.isFighting && this.pokemonPlayer.lifePoints > 0) {
@@ -553,12 +543,9 @@ class Game {
                 this.pokemonPlayer.lifePoints = this.pokemonPlayer.lifePoints.toFixed(2);
                 this.pokemonPlayer.lifePoints = Number(this.pokemonPlayer.lifePoints);
 
-
                 this.pokemonPlayer.attackPoints *= 1.05
                 this.pokemonPlayer.attackPoints = this.pokemonPlayer.attackPoints.toFixed(2);
                 this.pokemonPlayer.attackPoints = Number(this.pokemonPlayer.attackPoints);
-
-
 
                 this.pokemonPlayer.x = 100;
                 this.pokemonPlayer.y = 200;
@@ -568,11 +555,9 @@ class Game {
         }
         this.pokemonStatus.changeLivePoints();
         this.pokemonStatus.chageAttackPoints();
-
     }
 
     //Ash Battle
-
 
     startAshBattle() {
         if (this.ashBattle) {
@@ -614,9 +599,7 @@ class Game {
                 this.ashBattle = false;
                 this.isFighting = false;
                 this.resetMap();
-
             }
-
 
         }
         this.pokemonStatus.changeLivePoints();

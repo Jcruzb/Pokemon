@@ -91,13 +91,12 @@ class Pokemon {
         }
     }
     moveRandom() {
-        const randomMove = Math.floor(Math.random() * 100);
-        if (this.game.counter % 50 === 0) {
-            if (this.y < 1.5 * this.minLimit) {
+        if (this.game.counter % 10 === 0) {
+            if (this.y < 1.5 * 0) {
                 this.moveDown();
                 this.moveDown();
                 this.moveDown();
-            } else if (this.y + this.width > this.maxLimit) {
+            } else if (this.y + this.width > this.game.battle.height) {
                 this.moveUp();
                 this.moveUp();
                 this.moveUp();
@@ -128,11 +127,11 @@ class Pokemon {
         const actualLife = 100;
         const lifeBar = (totalLife) * actualLife / 100;
         if (actualLife > this.lifePoints / 2) {
-            this.ctx.fillStyle = 'green';
+            this.ctx.fillStyle = 'red';
         } else if (actualLife > this.lifePoints / 4) {
             this.ctx.fillStyle = 'yellow';
         } else {
-            this.ctx.fillStyle = 'red';
+            this.ctx.fillStyle = 'green';
         }
         this.ctx.fillRect(this.x, this.y - 10, lifeBar, 5);
     }
